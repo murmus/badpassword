@@ -1,0 +1,15 @@
+This project is designed to generate security failing passwords.
+
+The simplest example is generating random passwords which contain a single quote (') character in them. If the password is being passed unsanitized to an SQL query, we'll get an error out of that. The examples go on, however. 
+
+For example, we have the PHP comparison errors, where an md5sum that starts with "0e..." will be equal to any other md5sum that starts with "0e...", or md5sum that contain the magic failure characters. I envision this project to be something that grows over time, adding in more and more security failure cases as I can. This software can then be left running on a server, attempting to find as many co-existing failure cases as possible in a single password.
+
+Version 0.1:
+
+Creates a random password.
+
+TODO:
+
+Add command line args for password length, output files.
+Decide on how to handle tests (see SYMBOLS).
+Learn how to C better, so I can implement easy to maintain tests.

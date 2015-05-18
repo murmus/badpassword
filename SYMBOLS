@@ -1,0 +1,8 @@
+I'm not sure how to handle symbols properly. Lets take the case of the single quote in a password. There's a few readily apparent answers (listed in increasing order of sensibility, in my opinnion):
+
+* Add the symbol to BASECHARS (and probably rename it to "DICTIONARY" or similar) and allow it to be randomly included.
+	- This has the downside that the "contains single quote" test case is extremely easy to satisfy, just add it in.
+* Maintain a list of BADCHARS, and force them to be contained in every password.
+	- Better, but may be unweildy if this list becomes long. Imagine a situation where there are 7 BADCHARS (say, '"\<*%_). Now an 8 character password contains only a single alphanumeric character.
+* Allow a configurable density of BADCHARS not to be exceeded.
+	- I think this is the best decision. Just as an example, allow passwords to have a density from 0 to 1.5x goal density, and randomly select characters to insert.
