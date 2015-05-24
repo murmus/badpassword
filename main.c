@@ -2,6 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "types.h"
+#include "tests.h"
+
 char BASECHARS[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345789";
 
 void seedrand(){
@@ -32,10 +35,23 @@ char *genpassword(int len){
 
 void main(){
 	char *password;
+
+	struct password *pssword;
+	int i;
+	int results[testcount];
+
+	pssword = malloc(sizeof(struct password));
 	seedrand();
 	
 	password = genpassword(10);
+	pssword->plaintext = password;
 
 	printf("%s\n", password);
-
+	for(i=0; i<testcount;i++){
+		printf("Executing %s\n", tests[i].name);
+		results[i] = tests[i].t(pssword);
+	}
+	for(i=0; i<testcount;i++){
+		printf("[%x] %s\n", results[i], tests[i].name);
+	}
 }

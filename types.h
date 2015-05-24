@@ -1,0 +1,4 @@
+struct password{
+	char * plaintext;
+};
+

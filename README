@@ -12,4 +12,4 @@ TODO:
 
 Add command line args for password length, output files.
 Decide on how to handle tests (see SYMBOLS).
-Learn how to C better, so I can implement easy to maintain tests.
+Need to add handling of iterations
