@@ -64,7 +64,6 @@ void main(){
 	}
 
 	result = 0;
-	printf("%x\n", stopmask);
 	while(result != stopmask){
 
 		password = genpassword(10);
@@ -79,6 +78,7 @@ void main(){
 		memcpy(pssword->md5digest, md5c.digest, 16);
 		pssword->md5digest[17]=0;
 
+		//result holds an int which holds a bitmap of the test reslts
 		result = 0;
 		for(i=0; i<testcount;i++){
 			result = (result<<1) | tests[i].t(pssword);;
@@ -86,12 +86,13 @@ void main(){
 
 		remove = 0;
 		for(i=0; i<rcount;i++){
-			//printf("%x %x %x\n", results[i], result, (results[i] | result));
 			if(results[i] == (results[i] | result)){
+				//If result is already in the map, proceed to next iter
 				i--;
 				break;
 			}
 			if(result == (results[i] | result)){
+				//this one can be removed
 				remove++;
 			} else if (remove){
 				results[i-remove] = results[i];	
@@ -99,11 +100,15 @@ void main(){
 		}
 		if(i == rcount){
 			newresults = (int *) malloc(sizeof(result) * (rcount-remove+1));
-			memcpy(newresults+1, results, rcount-remove);
+			memcpy(newresults+1, results, (rcount-remove)*sizeof(result));
+
+			//I'm not sure putting this latest result as the first element is the best way to handle it, but my 10 seconds of thinking says its close to being most efficient
+
 			newresults[0] = result;
 			rcount = rcount-remove+1;
 			free(results);
 			results = newresults;
+
 			printf("\"%s\"\t[%x]", password, result);
 			for(i=0;i<testcount;i++){
 				if((1<<i) & result)
