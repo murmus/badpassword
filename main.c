@@ -45,8 +45,12 @@ void main(){
 	int rcount=1;
 	int *results;
 	int *newresults;
+	MD5_CTX md5c;
 
 	char check;
+
+	int stopmask;
+	stopmask = (1<<(testcount))-1;
 
 	pssword = malloc(sizeof(struct password));
 	seedrand();
@@ -54,15 +58,30 @@ void main(){
 
 	results[0] = 0;
 	
-	while(1){
+	for(i=0;i<testcount;i++){
+		printf("[%x] %s\n", i, tests[i].name);
+
+	}
+
+	result = 0;
+	printf("%x\n", stopmask);
+	while(result != stopmask){
+
 		password = genpassword(10);
 		pssword->plaintext = password;
 
+		// md5sum
+		MD5Init(&md5c);
+		MD5Update(&md5c, pssword->plaintext, strlen(pssword->plaintext));
+		MD5Final(&md5c);
+
+		pssword->md5digest = (char *)malloc(17);
+		memcpy(pssword->md5digest, md5c.digest, 16);
+		pssword->md5digest[17]=0;
 
 		result = 0;
 		for(i=0; i<testcount;i++){
-			//printf("Executing %s\n", tests[i].name);
-			result = (result<<i) | tests[i].t(pssword);
+			result = (result<<1) | tests[i].t(pssword);;
 		}
 
 		remove = 0;
@@ -82,9 +101,10 @@ void main(){
 			newresults = (int *) malloc(sizeof(result) * (rcount-remove+1));
 			memcpy(newresults+1, results, rcount-remove);
 			newresults[0] = result;
+			rcount = rcount-remove+1;
 			free(results);
 			results = newresults;
-			printf("\"%s\"\t", password);
+			printf("\"%s\"\t[%x]", password, result);
 			for(i=0;i<testcount;i++){
 				if((1<<i) & result)
 					check = 'X';
