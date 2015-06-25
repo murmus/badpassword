@@ -1,5 +1,4 @@
 int test1(struct password *pass){
-	printf("It works.\n");
 	return 1;
 }
 

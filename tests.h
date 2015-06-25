@@ -12,7 +12,7 @@ int ptsinglequote(struct password * pass);
 
 struct test tests[] = {
 	{"Default Test", &test1},
-	{"Single Quote", &ptsinglequote}
+	{"Single Quote", &ptsinglequote},
 	};
 
 #define testcount sizeof(tests)/sizeof(struct test)
