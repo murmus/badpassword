@@ -4,6 +4,10 @@ The simplest example is generating random passwords which contain a single quote
 
 For example, we have the PHP comparison errors, where an md5sum that starts with "0e..." will be equal to any other md5sum that starts with "0e...", or md5sum that contain the magic failure characters. I envision this project to be something that grows over time, adding in more and more security failure cases as I can. This software can then be left running on a server, attempting to find as many co-existing failure cases as possible in a single password.
 
+Version 0.2:
+
+Now it works! Time to just add tests, since now it only brute forces single quotes...
+
 Version 0.1:
 
 Creates a random password.
@@ -11,5 +15,3 @@ Creates a random password.
 TODO:
 
 Add command line args for password length, output files.
-Decide on how to handle tests (see SYMBOLS).
-Need to add handling of iterations
