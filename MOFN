@@ -1,0 +1,7 @@
+M of N Tests
+
+At some point M of N tests need to be added. These are, for example, password complexity tests. In the current state, we could not have tests for different password complexity requirements. The primary purpose of this tool is to create fairly disposible passwords that should trigger bad coding pratices for the application being authenticated with. 
+
+For example: suppose I want to generate passwords which do pick 1, 2, 3, and 4 of the general password complexity types (lower, upper, number, symbol). Specifcally, I would like one of *each* of those types, because of maximum complexity rules on some particularly shitty sites. Now, in current iterations, this would mean the program would never terminate: we can never get all of the categories to complete successfully. This isn't a terrible situation to be in, but we can do better.
+
+M of N tests will let us get that. Instead, allow termination if at least M of an N size group of tests is successful.
